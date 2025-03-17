@@ -172,4 +172,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 Made with ❤️ by [Protocol](https://github.com/protocol-404)
 
 </div>
-# job-application-api
