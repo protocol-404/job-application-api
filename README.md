@@ -10,7 +10,7 @@
 </div>
 
 <p align="center">
-  <img src="resources/img/job-app-logo.svg" alt="Job Application API" width="300"/>
+  <img src="resources/img/job-app-logo.jpg" alt="Job Application API" width="300"/>
 </p>
 
 A modern, secure API for job applications platform with authentication, user roles, job listing management, and CV handling. Built on Laravel 11 with Sanctum authentication.
