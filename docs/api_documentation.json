@@ -1,0 +1,617 @@
+{
+    "info": {
+      "_postman_id": "3e5c8d8e-4f7a-4f0e-9a9e-9d8e9d8e9d8e",
+      "name": "Job Application API",
+      "description": "API endpoints for job application platform",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+      {
+        "key": "base_url",
+        "value": "http://localhost:8000/api",
+        "type": "string"
+      }
+    ],
+    "item": [
+      {
+        "name": "Authentication",
+        "item": [
+          {
+            "name": "Register",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "type": "text"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"name\": \"Test User\",\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\",\n    \"password_confirmation\": \"password123\",\n    \"role\": \"candidate\"\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/register",
+                "host": ["{{base_url}}"],
+                "path": ["register"]
+              },
+              "description": "Register a new user"
+            },
+            "response": []
+          },
+          {
+            "name": "Register Recruiter",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "type": "text"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"name\": \"Test Recruiter\",\n    \"email\": \"recruiter@example.com\",\n    \"password\": \"password123\",\n    \"password_confirmation\": \"password123\",\n    \"role\": \"recruiter\"\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/register",
+                "host": ["{{base_url}}"],
+                "path": ["register"]
+              },
+              "description": "Register a new recruiter"
+            },
+            "response": []
+          },
+          {
+            "name": "Login",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "exec": [
+                    "var jsonData = JSON.parse(responseBody);",
+                    "pm.environment.set(\"token\", jsonData.token);"
+                  ],
+                  "type": "text/javascript"
+                }
+              }
+            ],
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "type": "text"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\"\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/login",
+                "host": ["{{base_url}}"],
+                "path": ["login"]
+              },
+              "description": "Login and get authentication token"
+            },
+            "response": []
+          },
+          {
+            "name": "Logout",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/logout",
+                "host": ["{{base_url}}"],
+                "path": ["logout"]
+              },
+              "description": "Logout and invalidate token"
+            },
+            "response": []
+          }
+        ],
+        "description": "Authentication endpoints"
+      },
+      {
+        "name": "User Management",
+        "item": [
+          {
+            "name": "Get Current User",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/user",
+                "host": ["{{base_url}}"],
+                "path": ["user"]
+              },
+              "description": "Get current authenticated user"
+            },
+            "response": []
+          },
+          {
+            "name": "Update User Profile",
+            "request": {
+              "method": "PUT",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"name\": \"Updated Name\",\n    \"phone_number\": \"+1234567890\"\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/user",
+                "host": ["{{base_url}}"],
+                "path": ["user"]
+              },
+              "description": "Update user profile information"
+            },
+            "response": []
+          },
+          {
+            "name": "Get User Skills",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/user/skills",
+                "host": ["{{base_url}}"],
+                "path": ["user", "skills"]
+              },
+              "description": "Get skills of current user"
+            },
+            "response": []
+          },
+          {
+            "name": "Add User Skill",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"name\": \"Laravel\"\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/user/skills",
+                "host": ["{{base_url}}"],
+                "path": ["user", "skills"]
+              },
+              "description": "Add a skill to current user"
+            },
+            "response": []
+          },
+          {
+            "name": "Remove User Skill",
+            "request": {
+              "method": "DELETE",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/user/skills/1",
+                "host": ["{{base_url}}"],
+                "path": ["user", "skills", "1"]
+              },
+              "description": "Remove a skill from current user"
+            },
+            "response": []
+          }
+        ],
+        "description": "User management endpoints"
+      },
+      {
+        "name": "Job Offers",
+        "item": [
+          {
+            "name": "List Job Offers",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/job-offers",
+                "host": ["{{base_url}}"],
+                "path": ["job-offers"]
+              },
+              "description": "List all active job offers"
+            },
+            "response": []
+          },
+          {
+            "name": "Get Job Offer",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/job-offers/1",
+                "host": ["{{base_url}}"],
+                "path": ["job-offers", "1"]
+              },
+              "description": "Get a specific job offer"
+            },
+            "response": []
+          },
+          {
+            "name": "Create Job Offer (Recruiter)",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"title\": \"Senior Laravel Developer\",\n    \"description\": \"We are looking for an experienced Laravel developer to join our team.\",\n    \"requirements\": \"- 5+ years of PHP experience\\n- Strong Laravel knowledge\\n- Good communication skills\",\n    \"location\": \"Remote\",\n    \"is_active\": true\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/job-offers",
+                "host": ["{{base_url}}"],
+                "path": ["job-offers"]
+              },
+              "description": "Create a new job offer (recruiter only)"
+            },
+            "response": []
+          },
+          {
+            "name": "Update Job Offer (Recruiter)",
+            "request": {
+              "method": "PUT",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"title\": \"Senior Laravel Developer (Updated)\",\n    \"location\": \"Remote / San Francisco\"\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/job-offers/1",
+                "host": ["{{base_url}}"],
+                "path": ["job-offers", "1"]
+              },
+              "description": "Update a job offer (recruiter only)"
+            },
+            "response": []
+          },
+          {
+            "name": "Delete Job Offer (Recruiter)",
+            "request": {
+              "method": "DELETE",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/job-offers/1",
+                "host": ["{{base_url}}"],
+                "path": ["job-offers", "1"]
+              },
+              "description": "Delete a job offer (recruiter only)"
+            },
+            "response": []
+          },
+          {
+            "name": "Get Job Applications (Recruiter)",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/job-offers/1/applications",
+                "host": ["{{base_url}}"],
+                "path": ["job-offers", "1", "applications"]
+              },
+              "description": "Get applications for a job offer (recruiter only)"
+            },
+            "response": []
+          }
+        ],
+        "description": "Job offer management endpoints"
+      },
+      {
+        "name": "CV Management",
+        "item": [
+          {
+            "name": "List User CVs",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/cvs",
+                "host": ["{{base_url}}"],
+                "path": ["cvs"]
+              },
+              "description": "List all CVs of current user"
+            },
+            "response": []
+          },
+          {
+            "name": "Upload CV",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "body": {
+                "mode": "formdata",
+                "formdata": [
+                  {
+                    "key": "cv",
+                    "type": "file",
+                    "src": "/path/to/your/cv.pdf"
+                  }
+                ]
+              },
+              "url": {
+                "raw": "{{base_url}}/cvs",
+                "host": ["{{base_url}}"],
+                "path": ["cvs"]
+              },
+              "description": "Upload a new CV"
+            },
+            "response": []
+          },
+          {
+            "name": "Delete CV",
+            "request": {
+              "method": "DELETE",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/cvs/1",
+                "host": ["{{base_url}}"],
+                "path": ["cvs", "1"]
+              },
+              "description": "Delete a CV"
+            },
+            "response": []
+          }
+        ],
+        "description": "CV management endpoints"
+      },
+      {
+        "name": "Applications",
+        "item": [
+          {
+            "name": "List User Applications",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/applications",
+                "host": ["{{base_url}}"],
+                "path": ["applications"]
+              },
+              "description": "List all applications of current user"
+            },
+            "response": []
+          },
+          {
+            "name": "Apply for Job",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "type": "text"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}",
+                  "type": "text"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"job_offer_id\": 1,\n    \"cv_id\": 1\n}"
+              },
+              "url": {
+                "raw": "{{base_url}}/applications",
+                "host": ["{{base_url}}"],
+                "path": ["applications"]
+              },
+              "description": "Apply for a job using an existing CV"
+            },
+            "response": []
+          }
+        ],
+        "description": "Application management endpoints"
+      }
+    ]
+}
+
